@@ -1,0 +1,215 @@
+@import "~antd/dist/antd.less";
+@import "./partials/collapseBox.less";
+@import "./partials/dashboard.less";
+@primary-color: #1890ff; // primary color for all components
+@link-color: #1890ff; // link color
+@success-color: #52c41a; // success state color
+@warning-color: #faad14; // warning state color
+@error-color: #f5222d; // error state color
+@font-size-base: 14px; // major text font size
+@heading-color: rgba(0, 0, 0, 0.85); // heading text color
+@text-color: rgba(0, 0, 0, 0.65); // major text color
+@text-color-secondary: rgba(0, 0, 0, 0.45); // secondary text color
+@disabled-color: rgba(0, 0, 0, 0.25); // disable state color
+@border-radius-base: 2px; // major border radius
+@border-color-base: #d9d9d9; // major border color
+@box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+  0 9px 28px 8px rgba(0, 0, 0, 0.05); // major shadow for layers
+::selection {
+  background: #ff4208;
+  color:white;
+}
+html {
+  height: 100%;
+}
+.logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+[data-theme="dark"] .site-layout .site-layout-background {
+  background: #141414;
+}
+.ant-layout-sider-zero-width-trigger {
+  top: 5px;
+  right: 10px;
+  color: #001529;
+  background: none;
+  font-size: 20px;
+}
+// .ant-layout-sider-collapsed > .ant-layout-sider-zero-width-trigger {
+//   right: -50px;
+// }
+
+.center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 32px;
+  height: 38px;
+  margin-left: -16px;
+  margin-top: -19px;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.ant-avatar {
+  float: right;
+  margin-right: 30px;
+  margin-top: 15px;
+}
+
+.ant-dropdown-menu {
+  border-radius: 6px;
+}
+.login-form button[type="submit"] {
+  margin-bottom: 20px;
+}
+.login-form-forgot {
+  float: right;
+}
+.ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.login-form-button {
+  width: 100%;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+input:focus{
+  outline:none;
+}
+.SearchBar__InputWrapper{
+  position: relative;
+  height:100%;
+}
+.SearchBar__InputWrapper input{
+  margin-left:30px;
+  background-color:transparent;
+  border:none;
+  border-left: 1px solid #c3c3ce;
+}
+.SearchBar__InputWrapper svg{
+  position:absolute;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+}
+
+.SearchBar__InputWrapper .button{
+  background-color: #002746;
+  padding-left:40px;
+  padding-right:30px;
+  position: relative;
+  color:white;
+  display: grid;
+  place-items: center;
+}
+.MenuItemWrapper{
+  display: flex;
+  position: relative;
+}
+.MenuItemWrapper:not(:last-child)::after{
+  // border-right:1px solid rgb(255, 66, 8);
+  border-right:1px solid rgb(200,200,200);
+  content:"";
+  top:50%;
+  right:0;
+  height:50%;
+  position: absolute;
+  transform: translateY(-50%);
+}
+.arrow{
+  position: absolute;
+  left:-1px;
+  top:0;
+  width:15px;
+  height:100%;
+  clip-path: polygon(100% 50%, 0 100%, 0 0);
+  background-color: rgb(220, 221, 223);
+}
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.leftNav{
+  color:#002845;
+  font-size:1.2rem;
+  position: relative;
+}
+.leftNav .ant-col{
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+}
+.leftNav .ant-col::after{
+  content:"";
+  transition: 0.3s ease;
+  position: absolute;
+  height:3px;
+  background-color: #002845;
+  width:0;
+  bottom:0;
+  left:0;
+}
+.leftNav .ant-col:hover::after{
+  width:100%;
+}
+.title{
+  font-size:2rem;
+  text-align: center;
+}
+.not-last-margin-bottom:not(:last-child){
+  margin-bottom:16px;
+}
+img{
+  max-width:100%;
+}
+
+.shop-product{
+  border:1px solid #f5ccb6;
+  background-color:transparent;
+  border-radius:5px;
+}
+.shop-product img{
+  width:100%;
+}
+.shop-product .name{
+
+}
+.shop-product .cost{
+  color: #f5ccb6;
+}
