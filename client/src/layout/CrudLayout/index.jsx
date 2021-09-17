@@ -31,8 +31,14 @@ export default function CrudLayout({
           <Content
             className="site-layout-background"
             style={{
-              padding: "50px 40px",
-              margin: "50px auto",
+              paddingTop: "50px",
+              paddingBottom: "50px",
+              paddingLeft: "40px",
+              paddingRight: "40px",
+              marginTop: "50px",
+              marginBottom: "50px",
+              marginLeft: "auto",
+              marginRight: "auto",
               width: "100%",
               maxWidth: "1000px",
             }}

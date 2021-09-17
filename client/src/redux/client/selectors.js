@@ -15,6 +15,10 @@ export const selectAllBanners = createSelector(
   [selectCrud],
   (crud) => crud.banner
 );
+export const selectAllSpecials = createSelector(
+  [selectCrud],
+  (crud) => crud.special
+);
 export const selectAllBrandWithProduct = createSelector(
   [selectCrud],
   (crud) => crud.brandWithProduct
@@ -31,6 +35,10 @@ export const selectItemById = (itemId) =>
 export const selectCreatedItem = createSelector(
   [selectCrud],
   (crud) => crud.create
+);
+export const selectProducts = createSelector(
+  [selectCrud],
+  (crud) => crud.product
 );
 
 export const selectUpdatedItem = createSelector(

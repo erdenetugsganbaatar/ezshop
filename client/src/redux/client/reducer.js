@@ -32,6 +32,20 @@ const INITIAL_STATE = {
     isLoading: false,
     isSuccess: false,
   },
+  product: {
+    result: {
+      items: []
+    },
+    isLoading: false,
+    isSuccess: false,
+  },
+  special: {
+    result: {
+      items: []
+    },
+    isLoading: false,
+    isSuccess: false,
+  },
   category: {
     result: {
       items: []

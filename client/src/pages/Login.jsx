@@ -30,9 +30,9 @@ const LoginPage = () => {
           <Col span={12} offset={6}>
             <Content
               style={{
-                padding: "150px 0 180px",
                 maxWidth: "360px",
-                margin: "0 auto",
+                marginTop: 0,marginRight: "auto",marginLeft: "auto",marginBottom: 0, 
+                paddingTop: 150,paddingRight: 0,paddingLeft: 0,paddingBottom: 180 
               }}
             >
               <h1 style={{textAlign:"center", fontSize:24}}>EZ SHOP ADMIN PANEL</h1>

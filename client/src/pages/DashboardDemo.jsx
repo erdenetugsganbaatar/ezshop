@@ -21,7 +21,7 @@ const TopCard = ({ title, tagContent, tagColor, prefix }) => {
         >
           <h3 style={{ color: "#22075e", marginBottom: 0 }}>{title}</h3>
         </div>
-        <Divider style={{ padding: 0, margin: 0 }}></Divider>
+        <Divider style={{ paddingTop: 0,paddingRight: 0,paddingLeft: 0,paddingBottom: 0 , marginTop: 0,marginRight: 0,marginLeft: 0,marginBottom: 0 }}></Divider>
         <div className="pad15">
           <Row gutter={[0, 0]}>
             <Col className="gutter-row" span={11} style={{ textAlign: "left" }}>
@@ -40,7 +40,7 @@ const TopCard = ({ title, tagContent, tagColor, prefix }) => {
             >
               <Tag
                 color={tagColor}
-                style={{ margin: "0 auto", justifyContent: "center" }}
+                style={{ marginTop: 0,marginRight: "auto",marginLeft: "auto",marginBottom: 0 , justifyContent: "center" }}
               >
                 {tagContent}
               </Tag>

@@ -44,7 +44,6 @@ export const crud = {
           total: parseInt(data.pagination.count, 10),
         },
       };
-      console.log(result);
       dispatch({
         type: actionTypes.REQUEST_SUCCESS,
         keyState: "list",
@@ -66,7 +65,6 @@ export const crud = {
     });
     console.log("jsonData action redux", jsonData);
     let data = await request.create(entity, jsonData);
-    console.log(data);
     if (data.success === true) {
       dispatch({
         type: actionTypes.REQUEST_SUCCESS,

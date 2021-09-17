@@ -140,7 +140,6 @@ const request = {
     };
     try {
       const response = await axiosInstance.get(entityUrl);
-      console.log("request.get => response:",response)
       return successHandler(response);
     } catch (error) {
       return errorHandler(error);

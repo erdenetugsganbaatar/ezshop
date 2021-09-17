@@ -39,7 +39,6 @@ export const crud = {
       const result = {
         items: data.result
       };
-      console.log(result);
       dispatch({
         type: actionTypes.REQUEST_SUCCESS,
         keyState: "banner",
@@ -61,7 +60,6 @@ export const crud = {
     });
     
     let data = await request.get(entity);
-    console.log("DATA CATEGORY:",data);
     if (data.success === true) {
       const result = {
         items: data.result,
@@ -75,6 +73,56 @@ export const crud = {
       dispatch({
         type: actionTypes.REQUEST_FAILED,
         keyState: "category",
+        payload: null,
+      });
+    }
+  },
+  product: (entity) => async (dispatch) => {
+    dispatch({
+      type: actionTypes.REQUEST_LOADING,
+      keyState: "product",
+      payload: null,
+    });
+    
+    let data = await request.get(entity);
+    if (data.success === true) {
+      const result = {
+        items: data.result,
+      };
+      dispatch({
+        type: actionTypes.REQUEST_SUCCESS,
+        keyState: "product",
+        payload: result,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.REQUEST_FAILED,
+        keyState: "product",
+        payload: null,
+      });
+    }
+  },
+  special: (entity) => async (dispatch) => {
+    dispatch({
+      type: actionTypes.REQUEST_LOADING,
+      keyState: "special",
+      payload: null,
+    });
+    
+    let data = await request.get(entity);
+    if (data.success === true) {
+      const result = {
+        items: data.result,
+      };
+      dispatch({
+        type: actionTypes.REQUEST_SUCCESS,
+        keyState: "special",
+        payload: result,
+      });
+    } else {
+      dispatch({
+        type: actionTypes.REQUEST_FAILED,
+        keyState: "special",
         payload: null,
       });
     }
@@ -135,9 +183,7 @@ export const crud = {
       keyState: "create",
       payload: null,
     });
-    console.log("jsonData action redux", jsonData);
     let data = await request.create(entity, jsonData);
-    console.log(data);
     if (data.success === true) {
       dispatch({
         type: actionTypes.REQUEST_SUCCESS,

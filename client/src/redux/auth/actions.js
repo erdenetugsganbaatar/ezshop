@@ -9,7 +9,6 @@ export const login = (loginAdminData) => async (dispatch) => {
     payload: { loading: true },
   });
   const data = await authService.login(loginAdminData);
-  console.log("DATA:",data);
 
   if (data.success === true) {
     const authValue = {

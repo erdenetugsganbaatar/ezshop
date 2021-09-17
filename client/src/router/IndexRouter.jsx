@@ -9,7 +9,7 @@ import { SearchOutlined, ShoppingCartOutlined, DownloadOutlined, UserOutlined } 
 
 import { API_BASE_URL } from "@/config/serverApiConfig"
 
-import { selectAllCategories, selectAllBanners, selectAllBrands } from "@/redux/client/selectors";
+import { selectAllCategories, selectAllBanners, selectAllBrands, selectAllSpecials, selectProducts } from "@/redux/client/selectors";
 import { crud } from "@/redux/client/actions"
 import { useDispatch, useSelector } from "react-redux";
 
@@ -61,7 +61,7 @@ const TopHeader = () => {
     return (
         <Row justify="center" style={{ backgroundColor: "#ff4208", color: "white", padding: "5px 0" }}>
             <Col span={10} justify="start">Тавтай морил</Col>
-            <Col span={10} style={{ display: "flex", justifyContent: "flex-end", gap: "40px" }} >
+            <Col span={10} style={{ display: "flex", justifyContent: "flex-end", rowGap: "40px", colGap: "40px" }} >
                 <span>88536314</span>
                 <span>09:00 - 21:00 өдөр бүр</span>
                 <span>Сайт ашиглах заавар</span>
@@ -157,19 +157,19 @@ const BrandCard = ({ products, brandImageUrl, cardId }) => {
     return (
         <>
             {/* brandImageUrl, products */}
-            <Row style={{ flexDirection, gap: 16, flexWrap: "nowrap" }}>
+            <Row style={{ flexDirection, rowGap: 16, colGap: 16, flexWrap: "nowrap" }}>
                 <Col span={12} style={{ flexShrink: 1 }}>
                     <div>
                         <img src={API_BASE_URL + brandImageUrl} style={{ width: "100%", height: "100%", objectFit: "cover" }} alt="" />
                     </div>
                 </Col>
-                <Col span={12} style={{ display: "flex", flexShrink: 1, flexDirection: "column", gap: "16px" }}>
+                <Col span={12} style={{ display: "flex", flexShrink: 1, flexDirection: "column", rowGap: "16px", colGap: "16px" }}>
 
-                    <Row style={{ height: "50%", gap: "16px", flexWrap: "nowrap" }}>
+                    <Row style={{ height: "50%", colGap: "16px", rowGap: "16px", flexWrap: "nowrap" }}>
                         {
                             firstHalf.map((product, index) => {
                                 return (
-                                    <Col span={8} style={{ display: "flex", flexDirection: "column", backgroundColor: "#eceef0", alignItems: "center", flexShrink: 1 }}>
+                                    <Col key={product.id} span={8} style={{ display: "flex", flexDirection: "column", backgroundColor: "#eceef0", alignItems: "center", flexShrink: 1 }}>
                                         <div style={{ flexGrow: 1 }}></div>
                                         <img src={API_BASE_URL + product.filepath} alt="temp product" />
                                         <p>{product.name}</p>
@@ -180,11 +180,11 @@ const BrandCard = ({ products, brandImageUrl, cardId }) => {
                             })
                         }
                     </Row>
-                    <Row style={{ height: "50%", gap: "16px", flexWrap: "nowrap" }}>
+                    <Row style={{ height: "50%", rowGap: "16px", colGap: 16, flexWrap: "nowrap" }}>
                         {
                             secondHalf.map((product, index) => {
                                 return (
-                                    <Col span={8} style={{ display: "flex", flexDirection: "column", backgroundColor: "#eceef0", alignItems: "center", flexShrink: 1 }}>
+                                    <Col key={product.id} span={8} style={{ display: "flex", flexDirection: "column", backgroundColor: "#eceef0", alignItems: "center", flexShrink: 1 }}>
                                         <div style={{ flexGrow: 1 }}></div>
                                         <img src={API_BASE_URL + product.filepath} alt="temp product" />
                                         <p>{product.name}</p>
@@ -200,18 +200,10 @@ const BrandCard = ({ products, brandImageUrl, cardId }) => {
         </>
     )
 }
-const BrandCards = () => {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(crud.resetAction("brandWithProduct"));
-        dispatch(crud.brand("pub/brand/product"));
-    }, []);
-    const { result, isLoading } = useSelector(
-        selectAllBrands
-    );
-    const brands = result.items;
+const BrandCards = ({ brands }) => {
+
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+        <div style={{ display: "flex", flexDirection: "column", rowGap: "16px", colGap: "16px" }}>
             {
                 Array.isArray(brands) ? brands.map(brand => {
                     return (<BrandCard cardId={brand.id} key={brand.id} products={brand.Products} brandImageUrl={brand.filepath} />)
@@ -222,11 +214,10 @@ const BrandCards = () => {
     )
 }
 
-const ShopProduct = ({ product }) => {
+const Product = ({ product }) => {
     return (
         <Col span={4} >
             <div className="shop-product">
-                {/* Sale if has it */}
                 <img className="image" src={API_BASE_URL + product.filepath} alt={product.name} />
                 <div className="name">
                     {product.name}
@@ -238,14 +229,14 @@ const ShopProduct = ({ product }) => {
         </Col>
     )
 }
-const ShopProducts = ({ category }) => {
+const Products = ({ products, span=20 }) => {
     return (
-        <Col style={{ backgroundColor: "white", padding:16}} span="20">
-            <Row align="center" gutter={[16,16]} style={{margin:0}}> 
+        <Col style={{ backgroundColor: "white", padding: 16 }} span={span}>
+            <Row align="center" gutter={[16, 16]} style={{ marginTop: 0, marginBottom: 0, marginLeft: 0, marginRight: 0 }}>
                 {
-                    category.products && category.products.map((product) => {
+                    products && products.map((product) => {
                         return (
-                            <ShopProduct product={product} />
+                            <Product key={product.id} product={product} />
                         )
                     })
                 }
@@ -253,55 +244,92 @@ const ShopProducts = ({ category }) => {
         </Col>
     )
 }
-const Shop = () => {
-    const { result, isLoading } = useSelector(
-        selectAllCategories
-    );
-    const categories = result.items;
-    console.log('%c result:', "background:green; color:white;", result)
-    if (categories.length != 0)
-        return (
+const Shop = ({ category }) => {
+    return (
+        <>
+            <img src={API_BASE_URL + category.coverImagePath} alt="cover image" />
+            <Row align="center" style={{ backgroundColor: category.backgroundColor, padding: 16 }}>
+                <Products products={category.products} />
+            </Row>
+        </>
+    )
 
-            <>
-                <img src={API_BASE_URL + categories[1].coverImagePath} alt="cover image" />
-                <Row align="center" style={{ backgroundColor: categories[1].backgroundColor, padding:16}}>
-                    <ShopProducts category={categories[1]} />
-
-                </Row>
-            </>
-        )
-    return <></>
+}
+const Special = ({ special }) => {
+    return (
+        <>
+            <h1 className="title">{special.name}</h1>
+            <Row align="center" style={{ padding: 16 }}>
+                <Products products={special.Products} />
+            </Row>
+        </>
+    )
+}
+const Slider = ({ banners }) => {
+    if (!banners) banners = [];
+    return (
+        <Carousel autoplay>
+            {banners.map((banner) => {
+                return (
+                    <img
+                        height="500px"
+                        width="100%"
+                        className="hehe"
+                        style={{ objectFit: "cover" }}
+                        key={banner.id}
+                        src={API_BASE_URL + banner.filepath} />
+                )
+            })}
+        </Carousel>
+    )
 }
 const Container = () => {
     const dispatch = useDispatch();
     useEffect(() => {
+        dispatch(crud.resetAction("brandWithProduct"));
+        dispatch(crud.brand("pub/brand/product?limit=8"));
+
+        dispatch(crud.resetAction("special"));
+        dispatch(crud.special("pub/special/all"));
+
         dispatch(crud.resetAction("banner"));
-        dispatch(crud.banner("pub/banner/category/0"));
+        dispatch(crud.banner("pub/slider/category/0"));
+
+        dispatch(crud.resetAction("product"));
+        dispatch(crud.product("pub/product?limit=48"));
     }, []);
-    const { result: banners, isLoading } = useSelector(
+    const { result: allBrands } = useSelector(
+        selectAllBrands
+    );
+    const brands = JSON.parse(JSON.stringify(allBrands.items));
+
+    const { result: allSpecials } = useSelector(
+        selectAllSpecials
+    );
+    const specials = JSON.parse(JSON.stringify(allSpecials.items));
+
+    const { result: allProducts } = useSelector(
+        selectProducts
+    );
+    const products = JSON.parse(JSON.stringify(allProducts.items));
+    const { result: allSliders } = useSelector(
         selectAllBanners
     );
+    const sliders = JSON.parse(JSON.stringify(allSliders.items))
+    const { result: allCategories, isLoading } = useSelector(
+        selectAllCategories
+    );
+    const categories = JSON.parse(JSON.stringify(allCategories.items))
     return (
         <>
-            <Carousel autoplay>
-                {banners.items.map((item, index) => {
-                    if (index == 0) {
-                        return (
-                            <img
-                                height="500px"
-                                width="100%"
-                                style={{ objectFit: "cover" }}
-                                key={item.id}
-                                src={API_BASE_URL + item.filepath} />
-                        )
-                    }
-                })}
-            </Carousel>
+            {/* Slider #1 */}
+            {sliders.length > 0 ? <Slider banners={sliders.shift().banner} /> : null}
             <Row justify="center">
                 <Col span={20}>
-
                     <h1 className="title">Онцлох брендүүд</h1>
-                    <BrandCards />
+                    {/* Brand #1 */}
+                    <BrandCards brands={brands.splice(0, 4)} />
+                    {/* Slider #2 */}
                     <h1 className="title">WEEKLY SPECIAL</h1>
                     <MultiCarousel
                         additionalTransfrom={0}
@@ -360,21 +388,30 @@ const Container = () => {
                         <img style={{ borderRadius: "20px" }} src={API_BASE_URL + "uploads/temp_special.png"} alt="" />
                         <img style={{ borderRadius: "20px" }} src={API_BASE_URL + "uploads/temp_special.png"} alt="" />
                     </MultiCarousel>
-                    <Carousel autoplay style={{ marginTop: 20 }}>
-                        {banners.items.map((item, index) => {
-                            if (index !== 0) {
-                                return (
-                                    <img
-                                        height="500px"
-                                        width="100%"
-                                        style={{ objectFit: "cover" }}
-                                        key={item.id}
-                                        src={API_BASE_URL + item.filepath} />
-                                )
-                            }
-                        })}
-                    </Carousel>
-                    <Shop />
+                    {/* Shop #1 */}
+                    {categories.length != 0 ? <Shop category={categories.shift()} /> : null}
+                    {/* Brand #2 */}
+                    <BrandCards brands={brands.splice(0, 4)} />
+                    {/* Shop #2 */}
+                    {categories.length != 0 ? <Shop category={categories.shift()} /> : null}
+                    {/* Slider #3 */}
+                    {sliders.length != 0 ? <Slider banners={sliders.shift().banner} /> : null}
+                    {/* Special #1 */}
+                    {specials.length != 0 ? <Special special={specials.shift()} /> : null}
+                    {/* Shop #3 */}
+                    {categories.length != 0 ? <Shop category={categories.shift()} /> : null}
+                    {/* Slider #4 */}
+                    {sliders.length != 0 ? <Slider banners={sliders.shift().banner} /> : null}
+                    {/* Special #2 */}
+                    {specials.length != 0 ? <Special special={specials.shift()} /> : null}
+                    {/* Shop #4 */}
+                    {categories.length != 0 ? <Shop category={categories.shift()} /> : null}
+                    {/* Special #3 */}
+                    {specials.length != 0 ? <Special special={specials.shift()} /> : null}
+                    {/* Shop #5 */}
+                    {categories.length != 0 ? <Shop category={categories.shift()} /> : null}
+                    {/* Чөлөөт products */}
+                    {products.length != 0 ? <Products products={products} span={24}/> : null}
                 </Col>
             </Row>
         </>

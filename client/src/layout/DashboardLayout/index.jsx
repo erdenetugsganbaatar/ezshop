@@ -13,8 +13,14 @@ export default function DashboardLayout({ children }) {
       <HeaderContent />
       <Content
         style={{
-          padding: "30px 40px",
-          margin: "20px auto",
+          paddingTop: "30px",
+          paddingBottom: "30px",
+          paddingLeft: "40px",
+          paddingRight: "40px",
+          marginTop: "20px",
+          marginBottom: "20px",
+          marginLeft: "auto",
+          marginRight: "auto",
           width: "100%",
           maxWidth: "1100px",
         }}

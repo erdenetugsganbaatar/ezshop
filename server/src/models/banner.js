@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Banner = sequelize.define('Banner', {
-    categoryId : {
+    sliderId : {
       type: DataTypes.INTEGER
     },
     filepath: {
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Banner.associate = function(models) {
     // associations can be defined here
-    Banner.belongsTo(models.Category, { as: "category", foreignKey: "categoryId", onDelete: "cascade"});
+    Banner.belongsTo(models.Slider, { as: "slider", foreignKey: "sliderId", onDelete: "cascade"});
   };
   return Banner;
 };
